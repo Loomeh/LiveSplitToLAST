@@ -1,13 +1,15 @@
 import xml.etree.ElementTree as ET
+import os
 
 lssFilePath = input("Input the file path of your .lss file: ")
 with open(lssFilePath, 'r') as fp:
     lines = fp.readlines()
-fileName = input("Input the name you want for the resulting .json file (include the .json at the end): ")
 width = input("Input the width you want to have for the LAST window: ")
 height = input("Input the height you want to have for the LAST window: ")
 
-json = open(fileName, "a")
+fileName = os.path.splitext(os.path.basename(lssFilePath))[0] + ".json"
+lastDir = os.path.expanduser("~") + "/.last/splits/"
+json = open(lastDir + fileName, "a")
 
 splitsTitle = ""
 splitsCategory = ""
