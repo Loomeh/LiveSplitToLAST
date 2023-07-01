@@ -1,11 +1,19 @@
 import xml.etree.ElementTree as ET
+import os
 
 lssFilePath = input("Input the file path of your .lss file: ")
-fileName = input("Input the name you want for the resulting .json file (include the .json at the end): ")
+with open(lssFilePath, 'r') as fp:
+    lines = fp.readlines()
 width = input("Input the width you want to have for the LAST window: ")
 height = input("Input the height you want to have for the LAST window: ")
 
-json = open(fileName, "a")
+fileName = os.path.splitext(os.path.basename(lssFilePath))[0] + ".json"
+lastDir = os.path.expanduser("~") + "/.last/splits/"
+
+if not os.path.exists(lastDir):
+    os.makedirs(lastDir)
+    
+json = open(lastDir + fileName, "a")
 
 splitsTitle = ""
 splitsCategory = ""
@@ -15,11 +23,10 @@ startDelay = ""
 name_list = []  # Store the extracted names
 names_without_numbers = []
 text = ''
+has_game_times = False
+has_segment_times = False
 
 best_time_list = []
-
-with open(lssFilePath, 'r') as fp:
-    lines = fp.readlines()
 
 # Get game name, category, attempt count
 for line in lines:
@@ -48,6 +55,12 @@ for line in lines:
         end_index = line.index('</Name>')
         name = line[start_index:end_index].strip()
         name_list.append(name)
+    
+    if '<GameTime>' in line:
+        has_game_times = True
+    
+    if '<BestSegmentTime>' in line:
+        has_segment_times = True
     
 def returnBestGameTime(file_path):
     tree = ET.parse(file_path)
@@ -99,9 +112,12 @@ for i in range(len(names_without_numbers)):
     if i == (len(names_without_numbers) - 1):
         json.write("   {\n")
         json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"" + "," + "\n")
-        json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-        json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+        if has_game_times == True:
+            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
+            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
+            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
+        if has_segment_times == True:
+            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
         json.write("   }\n")
         json.write("  ],\n")
         json.write(f"  \"width\": " + width + "," + "\n")
@@ -110,11 +126,14 @@ for i in range(len(names_without_numbers)):
     else:
         json.write("   {\n")
         json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"" + "," + "\n")
-        json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-        json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+        if has_game_times == True:
+            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
+            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
+        if has_segment_times == True:
+            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
         json.write("   },\n")
         
 
-    print("The current PB time for " + names_without_numbers[i] + " is: " + game_times[i] + " and the best segment time is: " + segment_times[i])
+    if has_game_times == True:
+        print("The current PB time for " + names_without_numbers[i] + " is: " + game_times[i] + " and the best segment time is: " + segment_times[i])
 
