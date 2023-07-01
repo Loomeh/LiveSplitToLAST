@@ -9,6 +9,10 @@ height = input("Input the height you want to have for the LAST window: ")
 
 fileName = os.path.splitext(os.path.basename(lssFilePath))[0] + ".json"
 lastDir = os.path.expanduser("~") + "/.last/splits/"
+
+if not os.path.exists(lastDir):
+    os.makedirs(lastDir)
+    
 json = open(lastDir + fileName, "a")
 
 splitsTitle = ""
