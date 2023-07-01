@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 
 lssFilePath = input("Input the file path of your .lss file: ")
+with open(lssFilePath, 'r') as fp:
+    lines = fp.readlines()
 fileName = input("Input the name you want for the resulting .json file (include the .json at the end): ")
 width = input("Input the width you want to have for the LAST window: ")
 height = input("Input the height you want to have for the LAST window: ")
@@ -19,9 +21,6 @@ has_game_times = False
 has_segment_times = False
 
 best_time_list = []
-
-with open(lssFilePath, 'r') as fp:
-    lines = fp.readlines()
 
 # Get game name, category, attempt count
 for line in lines:
