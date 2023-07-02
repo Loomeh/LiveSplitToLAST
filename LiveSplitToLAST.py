@@ -109,9 +109,13 @@ for name in name_list:
 
 for i in range(len(names_without_numbers)):
 
+    json.write("   {\n")
+    json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"")
+    if has_game_times == True or has_segment_times == True:
+        json.write(f",")
+    json.write(f"\n")
+    
     if i == (len(names_without_numbers) - 1):
-        json.write("   {\n")
-        json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"" + "," + "\n")
         if has_game_times == True:
             json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
             json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
@@ -124,8 +128,6 @@ for i in range(len(names_without_numbers)):
         json.write(f"  \"height\": " + height + "\n")
         json.write("}")
     else:
-        json.write("   {\n")
-        json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"" + "," + "\n")
         if has_game_times == True:
             json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
             json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
