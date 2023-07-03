@@ -107,25 +107,20 @@ for i in range(len(name_list)):
         json.write(f",")
     json.write(f"\n")
     
-    if i == (len(name_list) - 1):
-        if has_game_times == True:
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        if has_segment_times == True:
-            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+    if has_game_times == True:
+        json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
+        json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
+    if has_segment_times == True:
+        json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+        
+    if i != (len(name_list) - 1):
+        json.write("   },\n")
+    else:
         json.write("   }\n")
         json.write("  ],\n")
         json.write(f"  \"width\": " + width + "," + "\n")
         json.write(f"  \"height\": " + height + "\n")
         json.write("}")
-    else:
-        if has_game_times == True:
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        if has_segment_times == True:
-            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
-        json.write("   },\n")
         
 
     if has_game_times == True:
