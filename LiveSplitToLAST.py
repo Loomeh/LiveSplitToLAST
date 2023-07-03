@@ -86,7 +86,7 @@ game_times = returnBestGameTime(file_path)
 segment_times = returnBestSegmentTime(file_path)
 
 json.write("{\n")
-json.write(f"  \"title\": " + "\"{game_name}: {splitsCategory}\",\n")
+json.write(f"  \"title\": \"{game_name}: {splitsCategory}\",\n")
 json.write(f"  \"attempt_count\": {attemptCount},\n")
 json.write(f"  \"start_delay\": \"{startDelay}\",\n")
 json.write("  \"splits\": [\n")
