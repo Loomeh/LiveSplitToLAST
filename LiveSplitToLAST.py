@@ -31,32 +31,26 @@ for line in lines:
         start_index = line.index('<GameName>') + len('<GameName>')
         end_index = line.index('</GameName>')
         game_name = line[start_index:end_index].strip()
-
-    if '<CategoryName>' in line:
+    elif '<CategoryName>' in line:
         start_index = line.index('<CategoryName>') + len('<CategoryName>')
         end_index = line.index('</CategoryName>')
-        splitsCategory = line[start_index:end_index].strip()
-        
-    if '<AttemptCount>' in line:
+        splitsCategory = line[start_index:end_index].strip()  
+    elif '<AttemptCount>' in line:
         start_index = line.index('<AttemptCount>') + len('<AttemptCount>')
         end_index = line.index('</AttemptCount>')
         attemptCount = line[start_index:end_index].strip()
-
-    if '<Offset>' in line:
+    elif '<Offset>' in line:
         start_index = line.index('<Offset>') + len('<Offset>')
         end_index = line.index('</Offset>')
         startDelay = line[start_index:end_index].strip()
-
-    if '<Name>' in line and '</Name>' in line:
+    elif '<Name>' in line and '</Name>' in line:
         start_index = line.index('<Name>') + len('<Name>')
         end_index = line.index('</Name>')
         name = line[start_index:end_index].strip()
         name_list.append(name)
-    
-    if '<GameTime>' in line:
+    elif '<GameTime>' in line:
         has_game_times = True
-    
-    if '<BestSegmentTime>' in line:
+    elif '<BestSegmentTime>' in line:
         has_segment_times = True
     
 def returnBestGameTime(file_path):
