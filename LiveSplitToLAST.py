@@ -21,7 +21,6 @@ game_name = ""
 attemptCount = 0
 startDelay = ""
 name_list = []  # Store the extracted names
-names_without_numbers = []
 text = ''
 has_game_times = False
 has_segment_times = False
@@ -100,42 +99,30 @@ json.write(f"  \"attempt_count\": " + attemptCount + "," + "\n")
 json.write(f"  \"start_delay\": " + "\"" + startDelay + "\"" + "," + "\n")
 json.write("  \"splits\": [\n")
 
-
-for name in name_list:
-    index = name.find(' ')
-    name_without_numbers = name[index+1:]
-    names_without_numbers.append(name_without_numbers)
-
-
-for i in range(len(names_without_numbers)):
+for i in range(len(name_list)):
 
     json.write("   {\n")
-    json.write(f"    \"title\": " + "\"" + names_without_numbers[i] + "\"")
+    json.write(f"    \"title\": " + "\"" + name_list[i] + "\"")
     if has_game_times == True or has_segment_times == True:
         json.write(f",")
     json.write(f"\n")
     
-    if i == (len(names_without_numbers) - 1):
-        if has_game_times == True:
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        if has_segment_times == True:
-            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+    if has_game_times == True:
+        json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
+        json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
+    if has_segment_times == True:
+        json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
+        
+    if i != (len(name_list) - 1):
+        json.write("   },\n")
+    else:
         json.write("   }\n")
         json.write("  ],\n")
         json.write(f"  \"width\": " + width + "," + "\n")
         json.write(f"  \"height\": " + height + "\n")
         json.write("}")
-    else:
-        if has_game_times == True:
-            json.write(f"    \"time\": " + "\"" + game_times[i] + "\"" + "," + "\n")
-            json.write(f"    \"best_time\": " + "\"\"" + "," + "\n")
-        if has_segment_times == True:
-            json.write(f"    \"best_segment\": " + "\"" + segment_times[i] + "\"" + "\n")
-        json.write("   },\n")
         
 
     if has_game_times == True:
-        print("The current PB time for " + names_without_numbers[i] + " is: " + game_times[i] + " and the best segment time is: " + segment_times[i])
+        print("The current PB time for " + name_list[i] + " is: " + game_times[i] + " and the best segment time is: " + segment_times[i])
 
