@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import os
+import html
 
 lssFilePath = input("Input the file path of your .lss file: ")
 with open(lssFilePath, 'r') as fp:
@@ -30,11 +31,11 @@ for line in lines:
     if '<GameName>' in line:
         start_index = line.index('<GameName>') + len('<GameName>')
         end_index = line.index('</GameName>')
-        game_name = line[start_index:end_index].strip()
+        game_name = html.unescape(line[start_index:end_index].strip())
     elif '<CategoryName>' in line:
         start_index = line.index('<CategoryName>') + len('<CategoryName>')
         end_index = line.index('</CategoryName>')
-        splitsCategory = line[start_index:end_index].strip()  
+        splitsCategory = html.unescape(line[start_index:end_index].strip())
     elif '<AttemptCount>' in line:
         start_index = line.index('<AttemptCount>') + len('<AttemptCount>')
         end_index = line.index('</AttemptCount>')
@@ -46,7 +47,7 @@ for line in lines:
     elif '<Name>' in line and '</Name>' in line:
         start_index = line.index('<Name>') + len('<Name>')
         end_index = line.index('</Name>')
-        name = line[start_index:end_index].strip()
+        name = html.unescape(line[start_index:end_index].strip())
         name_list.append(name)
     elif '<GameTime>' in line:
         has_game_times = True
